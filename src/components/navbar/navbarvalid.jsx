@@ -20,8 +20,6 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import { useNavigate } from 'react-router-dom';
 
-
-
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -60,10 +58,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-
-
 export default function Navbar() {
-
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -71,10 +66,9 @@ export default function Navbar() {
     navigate('/');
   };
 
-  const handleProfile = () =>{
-    navigate('/profile')
-  }
-
+  const handleProfile = () => {
+    navigate('/profile');
+  };
 
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -87,7 +81,6 @@ export default function Navbar() {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-
     setOpen(false);
   };
 
@@ -100,20 +93,13 @@ export default function Navbar() {
     }
   }
 
-  // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
     }
-
     prevOpen.current = open;
   }, [open]);
-
-
-
-
-
 
   return (
     <Box sx={{ flexGrow: 1, position: 'sticky', top: 0, zIndex: 1000, marginBottom: '30px' }}>
@@ -122,6 +108,7 @@ export default function Navbar() {
         <Container maxWidth="lm">
           <Toolbar>
             <Grid container alignItems="center" justifyContent="space-between">
+              {/* Sol Taraftaki Kısım */}
               <Grid item>
                 <Typography variant="h6" component="div" sx={{
                   width: { xs: '100px', md: '150px' },
@@ -138,6 +125,8 @@ export default function Navbar() {
                   BookStore
                 </Typography>
               </Grid>
+
+              {/* Orta Kısım - Search Bar */}
               <Grid item>
                 <Search sx={{ width: { xs: '110px', md: '400px' } }}>
                   <SearchIconWrapper>
@@ -146,22 +135,68 @@ export default function Navbar() {
                   <StyledInputBase
                     placeholder="Search"
                     inputProps={{ 'aria-label': 'search' }}
-                    sx={{ fontSize: '12px', padding: '8px' }}
+                    sx={{ fontSize: '12px', padding: '9px' }}
                   />
                 </Search>
               </Grid>
-              {/* Account Circle Icon*/}
+              
 
-              <Grid item >
-                <AccountCircleIcon sx={{ position: 'sticky', mt: '10px', }}
-                  ref={anchorRef}
-                  id="composition-button"
-                  aria-controls={open ? 'composition-menu' : undefined}
-                  aria-expanded={open ? 'true' : undefined}
-                  aria-haspopup="true"
-                  onClick={handleToggle} />
+              {/* Sağ Taraftaki Kısım */}
+              <Grid item sx={{bottom:'10px', paddingTop:'20px'}}>
+                {/* Account Circle Icon */}
+                <div> 
+                <Grid sx={{position:'inherit', textAlign:'center', fontFamily:'Roboto', wordBreak:'break-word', fontSize:'24px'}
+                }>{localStorage.getItem("username")}
+                </Grid> 
+                    
 
-                <div>
+                <Button sx={{
+                    width: { xs: '110px', md: '150px' },
+                    position: 'sticky',
+                    padding:'5px',
+                    mt:'10px',
+                    mb:'30px',
+                    backgroundColor: 'white',
+                    color: 'black',
+                    fontWeight: 'bold',
+                    '&:hover': { background: 'white', color: 'black' },
+                    '@media (max-width: 600px)': {
+                      fontSize: 10,
+                      alignItems: 'center',
+                      display: 'flex',
+                      wordWrap: 'break-word',
+                      justifyContent: 'center',
+                      
+                      position:'relative',
+                      bottom:'-5px',
+                      left:'20px'
+                    },
+                  }}>Become Seller</Button>
+                  <AccountCircleIcon sx={{ 
+                    height:'40px', 
+                    width:'60px', 
+                    position: 
+                    'relative', 
+                    top:'5px' , 
+                    zIndex: 1001,
+                    '@media (max-width: 600px)': {
+                      height:'30px', 
+                      width:'60px', 
+                      position:'relative',
+                      top:'-100px',
+                      left:'80px'
+                    },
+
+                   }}
+          
+                    ref={anchorRef}
+                    id="composition-button"
+                    aria-controls={open ? 'composition-menu' : undefined}
+                    aria-expanded={open ? 'true' : undefined}
+                    aria-haspopup="true"
+                    onClick={handleToggle} />
+                    
+
                   <Popper
                     open={open}
                     anchorEl={anchorRef.current}
@@ -195,6 +230,9 @@ export default function Navbar() {
                       </Grow>
                     )}
                   </Popper>
+
+                  {/* Become Seller Button */}
+                  
                 </div>
               </Grid>
             </Grid>

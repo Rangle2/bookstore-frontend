@@ -49,7 +49,7 @@ const Register = () => {
         try {
           const userData = await userResponse.json();
           setCorrectMessage('Successful registration!')
-          navigate('/home'); // direct user home page 
+          navigate('/home'); // navigate user home page 
           
         } catch (error) {
           console.error('Error parsing JSON:', error.message);

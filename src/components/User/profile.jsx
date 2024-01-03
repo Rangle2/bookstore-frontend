@@ -96,7 +96,7 @@ export default function ProfileTabs() {
     }
   };
 
-  
+
 
   if (loading) {
     return (
@@ -117,7 +117,21 @@ export default function ProfileTabs() {
         value={value}
         onChange={handleChange}
         aria-label="Vertical tabs example"
-        sx={{ borderRight: 1, borderColor: 'divider' }}
+        style={{
+          borderRight: 1,
+          borderColor: 'divider'
+        }}
+        sx={{
+          '@media (max-width: 600px)': {
+            width: '100px',
+            overflow: 'visible',
+            position: 'relative',
+            right: '90px',
+
+          },
+        }}
+
+
       >
         <Tab label="Change Username" {...a11yProps(0)} />
         <Tab label="Change Password" {...a11yProps(1)} />
@@ -132,6 +146,16 @@ export default function ProfileTabs() {
             margin="normal"
             fullWidth
             style={{ marginBottom: '20px', color: 'black' }}
+            sx={{
+              '@media (max-width: 600px)': {
+                height: '30px',
+                width: '160px',
+                fontSize: '20px',
+                position: 'relative',
+                top: '-10px',
+                left: '-80px'
+              },
+            }}
           />
           <TextField
             id="currentPassword"
@@ -141,6 +165,16 @@ export default function ProfileTabs() {
             margin="normal"
             fullWidth
             style={{ marginBottom: '20px' }}
+            sx={{
+              '@media (max-width: 600px)': {
+                height: '30px',
+                width: '160px',
+                fontSize: '20px',
+                position: 'relative',
+                top: '-10px',
+                left: '-80px'
+              },
+            }}
           />
         </TabPanel>
         <TabPanel value={value} index={1}>
@@ -151,6 +185,16 @@ export default function ProfileTabs() {
             margin="normal"
             fullWidth
             style={{ marginBottom: '20px' }}
+            sx={{
+              '@media (max-width: 600px)': {
+                height: '30px',
+                width: '160px',
+                fontSize: '20px',
+                position: 'relative',
+                top: '-10px',
+                left: '-80px'
+              },
+            }}
           />
           <TextField
             id="currentPassword"
@@ -160,6 +204,16 @@ export default function ProfileTabs() {
             margin="normal"
             fullWidth
             style={{ marginBottom: '20px' }}
+            sx={{
+              '@media (max-width: 600px)': {
+                height: '30px',
+                width: '160px',
+                fontSize: '20px',
+                position: 'relative',
+                top: '-10px',
+                left: '-80px'
+              },
+            }}
           />
           <TextField
             id="newPassword"
@@ -169,6 +223,16 @@ export default function ProfileTabs() {
             margin="normal"
             fullWidth
             style={{ marginBottom: '20px' }}
+            sx={{
+              '@media (max-width: 600px)': {
+                height: '30px',
+                width: '160px',
+                fontSize: '20px',
+                position: 'relative',
+                top: '-10px',
+                left: '-80px'
+              },
+            }}
           />
         </TabPanel>
         <TabPanel value={value} index={2}>
@@ -182,13 +246,28 @@ export default function ProfileTabs() {
         </TabPanel>
         {value !== 2 && (
           <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            style={{ width: '50%', backgroundColor: 'black', marginLeft: '100px' }}
-          >
-            Save
-          </Button>
+          variant="contained"
+          color="primary"
+          type="submit"
+          style={{
+              
+              backgroundColor: 'black',
+              marginLeft: '100px'
+          }}
+          sx={{
+              '@media (max-width: 600px)': {
+                  width: '100%', 
+                  position: 'relative',
+                  top: '-10px',
+                  left: '-150px',
+              },
+              '@media (min-width: 701px)': {
+                  width: '50%', 
+              },
+          }}
+      >
+          Save
+      </Button>
         )}
       </form>
     </Box>

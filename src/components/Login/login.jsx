@@ -13,6 +13,8 @@ import Homevalid from '../Home/homevalid';
 
 
 const LoginForm = () => {
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [correctMessage, setCorrectMessage] = useState(null);
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -41,13 +43,14 @@ const LoginForm = () => {
     };
 
     try {
-      const userResponse = await fetch('http://localhost:8080/api/user/login', {
+      const userResponse = await fetch('http://192.168.1.12:8080/api/user/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(userRequest),
       });
+      
 
       if (userResponse.ok) {
         try {
@@ -63,15 +66,19 @@ const LoginForm = () => {
 
         } catch (error) {
           console.error('Error parsing JSON:', error.message);
+          setErrorMessage('Unexpected error occurred. Please try again.');
         }
+
+      }else if(userResponse.status === 401){
+        setErrorMessage("Username or password wrong!")
       } else {
         console.error('Error Login user:', userResponse.statusText);
-
-
+        setErrorMessage('Unexpected error occurred. Please try again.');
       }
+
     } catch (error) {
       console.error('Error Login user:', error.message);
-
+      setErrorMessage('Unexpected error occurred. Please try again.');
     }
   };
 
@@ -87,6 +94,12 @@ const LoginForm = () => {
       >
         <Typography component="h1" variant="h5" sx={{ color: 'black' }}>
           Login
+        </Typography>
+        <Typography sx={{color:'red', mt:'10px', textAlign:'center', width:'500px',pt:'10px'}}>
+           {errorMessage}
+        </Typography>
+        <Typography  sx={{color:'green', mt:'10px'}}>
+          {correctMessage}
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <TextField
