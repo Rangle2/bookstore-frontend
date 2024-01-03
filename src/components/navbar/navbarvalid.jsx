@@ -139,23 +139,23 @@ export default function Navbar() {
                   />
                 </Search>
               </Grid>
-              
+
 
               {/* Sağ Taraftaki Kısım */}
-              <Grid item sx={{bottom:'10px', paddingTop:'20px'}}>
+              <Grid item sx={{ bottom: '10px', paddingTop: '20px' }}>
                 {/* Account Circle Icon */}
-                <div> 
-                <Grid sx={{position:'inherit', textAlign:'center', fontFamily:'Roboto', wordBreak:'break-word', fontSize:'24px'}
-                }>{localStorage.getItem("username")}
-                </Grid> 
-                    
+                <div>
+                  <Grid sx={{ position: 'inherit', textAlign: 'center', fontFamily: 'Roboto', wordBreak: 'break-word', fontSize: '24px' }
+                  }>{localStorage.getItem("username")}
+                  </Grid>
 
-                <Button sx={{
+
+                  <Button sx={{
                     width: { xs: '110px', md: '150px' },
                     position: 'sticky',
-                    padding:'5px',
-                    mt:'10px',
-                    mb:'30px',
+                    padding: '5px',
+                    mt: '10px',
+                    mb: '30px',
                     backgroundColor: 'white',
                     color: 'black',
                     fontWeight: 'bold',
@@ -166,36 +166,35 @@ export default function Navbar() {
                       display: 'flex',
                       wordWrap: 'break-word',
                       justifyContent: 'center',
-                      
-                      position:'relative',
-                      bottom:'-5px',
-                      left:'20px'
+
+                      position: 'relative',
+                      bottom: '-5px',
+                      left: '20px'
                     },
                   }}>Become Seller</Button>
-                  <AccountCircleIcon sx={{ 
-                    height:'40px', 
-                    width:'60px', 
-                    position: 
-                    'relative', 
-                    top:'5px' , 
+                  <AccountCircleIcon s sx={{
+                    height: '40px',
+                    width: '60px',
+                    position: 'relative',
+                    top: '5px',
                     zIndex: 1001,
                     '@media (max-width: 600px)': {
-                      height:'30px', 
-                      width:'60px', 
-                      position:'relative',
-                      top:'-100px',
-                      left:'80px'
+                      height: '30px',
+                      width: '30px',  
+                      position: 'relative',
+                      top: '-100px',
+                      left: '80px'
                     },
 
-                   }}
-          
+                  }}
+
                     ref={anchorRef}
                     id="composition-button"
                     aria-controls={open ? 'composition-menu' : undefined}
                     aria-expanded={open ? 'true' : undefined}
                     aria-haspopup="true"
                     onClick={handleToggle} />
-                    
+
 
                   <Popper
                     open={open}
@@ -232,7 +231,7 @@ export default function Navbar() {
                   </Popper>
 
                   {/* Become Seller Button */}
-                  
+
                 </div>
               </Grid>
             </Grid>

@@ -5,11 +5,15 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, IconButton } from '@mui/material';
 import Button from '@mui/material/Button';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { useNavigate } from 'react-router-dom';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
+
+
 
   return (
     <div
@@ -82,9 +86,17 @@ export default function ProfileTabs() {
     fetchUserData();
   }, []);
 
+  const navigate = useNavigate();
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const handleBack = () => {
+    navigate('/home');
+    window.location.reload();
+    
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -111,6 +123,11 @@ export default function ProfileTabs() {
       flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 224, width: '30%', margin: 'auto', alignItems: 'center',
       height: '80vh'
     }}>
+      <IconButton onClick={handleBack} edge="start" color="inherit" aria-label="back">
+      <ArrowBackIcon/>
+    </IconButton>
+
+
       <Tabs
         orientation="vertical"
         variant="scrollable"
@@ -236,39 +253,72 @@ export default function ProfileTabs() {
           />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          {userData && (
-            <>
-              <Typography>Username : {userData.username}</Typography>
-              <Typography>Email: {userData.email}</Typography>
-              {/* Add more information as needed */}
-            </>
-          )}
+          <div style={{ padding: '20px', border: '1px solid #ccc', borderRadius: '5px' }}>
+            {userData && (
+              <>
+                <Typography variant="h6" style={{ fontFamily: 'sans-serif' }}>Username : {userData.username}</Typography>
+
+                <Typography variant="h6" style={{ fontFamily: 'sans-serif' }}>Email: {userData.email}</Typography>
+
+              </>
+            )}
+          </div>
+
         </TabPanel>
         {value !== 2 && (
           <Button
-          variant="contained"
-          color="primary"
-          type="submit"
-          style={{
-              
+            variant="contained"
+            color="primary"
+            type="submit"
+            style={{
+
               backgroundColor: 'black',
               marginLeft: '100px'
-          }}
-          sx={{
+            }}
+            sx={{
               '@media (max-width: 600px)': {
-                  width: '100%', 
-                  position: 'relative',
-                  top: '-10px',
-                  left: '-150px',
+                width: '100%',
+                position: 'relative',
+                top: '-10px',
+                left: '-150px',
               },
               '@media (min-width: 701px)': {
-                  width: '50%', 
+                width: '50%',
               },
-          }}
-      >
-          Save
-      </Button>
+            }}
+          >
+            Save
+          </Button>
         )}
+
+
+        {value === 2 && (
+          <Button
+            style={{
+
+              backgroundColor: 'black',
+              marginLeft: '100px',
+              color:'white',
+              
+            }}
+            sx={{
+              '@media (max-width: 600px)': {
+                width: '100%',
+                position: 'relative',
+                top: '-10px',
+                left: '-150px',
+              },
+              '@media (min-width: 701px)': {
+                width: '50%',
+              },
+            }}
+
+
+
+          >Delete Account</Button>
+        )}
+
+
       </form>
     </Box>
   );
