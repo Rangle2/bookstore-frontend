@@ -5,6 +5,7 @@ import Register from './components/Register/register'; // Import your Register c
 import LoginForm from './components/Login/login';
 import Homevalid from './components/Home/homevalid';
 import Profile from './components/User/profile';
+import Product from './components/Product/product';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/home" element={<Homevalid />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/product" element={<Product/>} />
 
         {/* Add more routes as needed */}
       </Routes>
