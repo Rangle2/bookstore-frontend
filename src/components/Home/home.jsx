@@ -6,11 +6,20 @@ import Grid from '@mui/material/Grid';
 import { Button } from '@mui/material';
 import ProductList from '../ProductList/productlist';
 import TopList from '../TopList/toplist';
-import CategoryList from '../Category/categorylist';
-import Category from '../Category/category';
+import  Category  from '../Category/category';
 import AboutUs from '../AboutUs/aboutus';
+import { useState } from 'react';
+
 
 const Home = () => {
+
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const handleCategoryClick = (categoryId) => {
+    setSelectedCategory(categoryId);
+  };
+
+  
   return (
     <div>
       <Navbar title="book store"></Navbar>
@@ -38,10 +47,10 @@ const Home = () => {
         <Container maxWidth="lg" sx={{ display: { xs: 'none', sm: 'block' } }}>
           <Grid container spacing={4} sx={{ marginTop: 11 }}>
             <Grid item xs={12} md={4}>
-              <Category />
+            <Category onCategoryClick={handleCategoryClick} />
             </Grid>
             <Grid item xs={12} md={8}>
-              <CategoryList />
+            
             </Grid>
           </Grid>
         </Container>

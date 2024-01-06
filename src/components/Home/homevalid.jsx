@@ -6,7 +6,6 @@ import Grid from '@mui/material/Grid';
 import { Button } from '@mui/material';
 import ProductList from '../ProductList/productlist';
 import TopList from '../TopList/toplist';
-import CategoryList from '../Category/categorylist';
 import Category from '../Category/category';
 import AboutUs from '../AboutUs/aboutus';
 import LoginForm from '../Login/login';
@@ -69,16 +68,13 @@ const Homevalid = () => {
 
 
         {/* Category */}
-        <Container maxWidth="lg" sx={{ display: { xs: 'none', sm: 'block' } }}>
-          <Grid container spacing={4} sx={{ marginTop: 11 }}>
-            <Grid item xs={12} md={4}>
-              <Category />
-            </Grid>
-            <Grid item xs={12} md={8}>
-              <CategoryList />
-            </Grid>
-          </Grid>
-        </Container>
+       
+         
+           
+            <Category />
+
+           
+        
 
 
         {/* Best Author List*/}

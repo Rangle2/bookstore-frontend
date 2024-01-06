@@ -1,60 +1,103 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import { FixedSizeList } from 'react-window';
+import { Link } from 'react-router-dom';
+import CategoryCard from './categorycard';
 
-
-
-
-// Main Category component
-function Category() {
-  // State to hold the fetched categories
-  const [categories, setCategories] = React.useState([]);
-
-  // Function to render each row in the list
-  function renderRow(props) {
-    const { index, style } = props;
-    const category = categories[index];
-    
-  
+const Category = ({ categories, onCategoryClick }) => {
     return (
-      <ListItem style={style} key={category.categoryId} component="div" disablePadding>
-        <ListItemButton>
-          <ListItemText primary={category.categoryName} />
-        </ListItemButton>
-      </ListItem>
+        <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+            {categories.map((category) => (
+                <ListItem key={category.categoryId} component="div" disablePadding>
+                    <ListItemButton onClick={() => onCategoryClick(category.categoryId)}>
+                        <ListItemText primary={category.categoryName} />
+                    </ListItemButton>
+                </ListItem>
+            ))}
+        </Box>
     );
-  }
-  
+};
 
-  // Effect hook to fetch categories when the component mounts
-  React.useEffect(() => {
-    // Fetch categories from the API
-    fetch('http://localhost:8080/api/category/get')
-      .then(response => response.json())
-      .then(data => setCategories(data))
-      .catch(error => console.error('Error fetching categories:', error));
-  }, []); // The useEffect runs only once when the component is initially rendered
+const ProductList = ({ products, selectedCategory }) => {
+    console.log(selectedCategory);
 
-  // Render the component
-  return (
-    <Box
-      sx={{ width: '100%', height: 400, maxWidth: 360, bgcolor: 'background.paper' }}
-    >
-      <FixedSizeList
-        height={400}
-        width={360}
-        itemSize={46}
-        itemCount={categories.length}
-        overscanCount={5}
-      >
-        {/* Use the renderRow function to render each row */}
-        {renderRow}
-      </FixedSizeList>
-    </Box>
-  );
-}
+    return (
+        <div style={{ display: 'flex', flexWrap: 'wrap', overflowY: 'auto', maxHeight: '500px', marginTop: '20px' }}>
+            {products.map((product) => (
+                <div key={product.productId} style={{ width: '200px', margin: '8px' }}>
+                    <Link to={`/product/${product.productId}`} style={{ textDecoration: 'none' }}>
+                        <CategoryCard
+                            title={product.name}
+                            description={product.description}
+                            price={`${product.price} ₺`}
+                            category={selectedCategory !== undefined ? `Category ${selectedCategory}` : ''}
+                            imageUrl={product.imgLink}
+                        />
+                    </Link>
+                </div>
+            ))}
+        </div>
+    );
+};;
 
-export default Category;
+
+const CategoryList = () => {
+    const [categories, setCategories] = useState([]);
+    const [categoryProducts, setCategoryProducts] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(undefined);
+
+    const fetchCategories = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/api/category/get');
+            const data = await response.json();
+            setCategories(data);
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+        }
+    };
+
+    const fetchCategoryProducts = async (categoryId) => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/category/${categoryId}/products`);
+            const data = await response.json();
+            setCategoryProducts(data);
+        } catch (error) {
+            console.error(`Error fetching products for category ${categoryId}:`, error);
+        }
+    };
+
+
+    const fetchAllProducts = async (categoryId) => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/products/get`);
+            const data = await response.json();
+            setCategoryProducts(data);
+        } catch (error) {
+            console.error(`Error fetching products for category ${categoryId}:`, error);
+        }
+    };
+
+
+
+
+    useEffect(() => {
+        fetchCategories();
+        fetchAllProducts();
+    }, []);
+
+    const handleCategoryClick = (categoryId) => {
+        fetchCategoryProducts(categoryId);
+        setSelectedCategory(categoryId);
+    };
+
+    return (
+        <div style={{ display: 'flex' }}>
+            <Category categories={categories} onCategoryClick={handleCategoryClick} />
+            <ProductList products={categoryProducts} selectedCategory={selectedCategory} />
+        </div>
+    );
+};
+
+export default CategoryList;
