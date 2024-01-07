@@ -11,6 +11,7 @@ import AboutUs from '../AboutUs/aboutus';
 import LoginForm from '../Login/login';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
+import CreateSeller from '../Seller/createseller';
 
 const isTokenValid = (token) => {
   return token !== null && token !== undefined;
@@ -20,6 +21,8 @@ const AuthCheck = ({ children, onLogin }) => {
   const [loading, setLoading] = React.useState(true);
   const token = localStorage.getItem('accessToken');
   const isValid = isTokenValid(token);
+  const role = JSON.parse(localStorage.getItem("userRoles"));
+  const isSeller =  role.some(role => role.name === 'ROLE_SELLER');
 
   React.useEffect(() => {
     // Simulate an asynchronous token validation process
@@ -35,14 +38,14 @@ const AuthCheck = ({ children, onLogin }) => {
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       <CircularProgress />
       </div>
-  ) : isValid ? (
+  ) : isValid && isSeller ? (
     <>{children}</>
   ) : (
-    <LoginForm onLogin={onLogin} />
+    <CreateSeller onLogin={onLogin} />
   );
 };
 
-const Homevalid = () => {
+const Homeseller = () => {
 
   return (
     <AuthCheck>
@@ -69,11 +72,7 @@ const Homevalid = () => {
 
 
         {/* Category */}
-       
-                   
-            <Category />
-
-
+        <Category />
         {/* Best Author List*/}
 
         <Grid item xs={12} sx={{ marginTop: 15 }}>
@@ -103,4 +102,4 @@ const Homevalid = () => {
   );
 };
 
-export default Homevalid;
+export default Homeseller;

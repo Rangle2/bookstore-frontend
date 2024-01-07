@@ -9,19 +9,15 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useNavigate } from 'react-router-dom';
-import Homevalid from '../Home/homevalid';
-
 
 const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState(null);
-  const [correctMessage, setCorrectMessage] = useState(null);
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
 
   const navigate = useNavigate();
-
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
@@ -32,10 +28,8 @@ const LoginForm = () => {
     setShowPassword(!showPassword);
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
 
     const userRequest = {
       username: formData.username,
@@ -43,39 +37,64 @@ const LoginForm = () => {
     };
 
     try {
-      const userResponse = await fetch('http://192.168.1.12:8080/api/user/login', {
+      const userResponse = await fetch('http://localhost:8080/api/user/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(userRequest),
       });
-      
 
       if (userResponse.ok) {
         try {
           const tokendata = await userResponse.text();
           console.log('User Login successfully:', tokendata);
 
-
-          localStorage.setItem('username', formData.username)
-          localStorage.setItem('userId', formData.userId)
+          localStorage.setItem('username', formData.username);
+          localStorage.setItem('userId', formData.userId); // Make sure you have formData.userId available
           localStorage.setItem('accessToken', tokendata);
-          navigate('/home');
-          
 
+          const userRoleResponse = await fetch(`http://localhost:8080/api/user/role/${formData.username}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+
+          if (userRoleResponse.ok) {
+            try {
+              const userRoles = await userRoleResponse.json();
+              console.log('User Roles:', userRoles);
+
+              // Assuming userRoles is an array, you can check if it contains ROLE_SELLER
+              const isSeller = userRoles.some(role => role.name === 'ROLE_SELLER');
+
+              if (isSeller) {
+                // User has ROLE_SELLER, navigate to /home/seller
+                navigate('/home/seller');
+              } else {
+                // User doesn't have ROLE_SELLER, navigate to /home
+                navigate('/home');
+              }
+              // Store userRoles in localStorage with a specific key (e.g., 'userRoles')
+              localStorage.setItem('userRoles', JSON.stringify(userRoles));
+
+            } catch (error) {
+              console.error('Error parsing JSON:', error.message);
+            }
+          } else {
+            console.error('Error fetching user roles:', userRoleResponse.statusText);
+          }
         } catch (error) {
           console.error('Error parsing JSON:', error.message);
           setErrorMessage('Unexpected error occurred. Please try again.');
         }
-
-      }else if(userResponse.status === 401){
-        setErrorMessage("Username or password wrong!")
+      } else if (userResponse.status === 401) {
+        setErrorMessage('Username or password wrong!');
       } else {
         console.error('Error Login user:', userResponse.statusText);
         setErrorMessage('Unexpected error occurred. Please try again.');
       }
-
     } catch (error) {
       console.error('Error Login user:', error.message);
       setErrorMessage('Unexpected error occurred. Please try again.');
@@ -95,11 +114,8 @@ const LoginForm = () => {
         <Typography component="h1" variant="h5" sx={{ color: 'black' }}>
           Login
         </Typography>
-        <Typography sx={{color:'red', mt:'10px', textAlign:'center', width:'500px',pt:'10px'}}>
-           {errorMessage}
-        </Typography>
-        <Typography  sx={{color:'green', mt:'10px'}}>
-          {correctMessage}
+        <Typography sx={{ color: 'red', mt: '10px', textAlign: 'center', width: '500px', pt: '10px' }}>
+          {errorMessage}
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <TextField

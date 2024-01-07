@@ -8,7 +8,7 @@ import CategoryCard from './categorycard';
 
 const Category = ({ categories, onCategoryClick }) => {
     return (
-        <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+        <Box sx={{ width: '100%', maxWidth: 260, bgcolor: 'background.paper' }}>
             {categories.map((category) => (
                 <ListItem key={category.categoryId} component="div" disablePadding>
                     <ListItemButton onClick={() => onCategoryClick(category.categoryId)}>
@@ -24,7 +24,7 @@ const ProductList = ({ products, selectedCategory }) => {
     console.log(selectedCategory);
 
     return (
-        <div style={{ display: 'flex', flexWrap: 'wrap', overflowY: 'auto', maxHeight: '500px', marginTop: '20px' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', overflowY: 'auto', maxHeight: '500px', marginTop: '10px' }}>
             {products.map((product) => (
                 <div key={product.productId} style={{ width: '200px', margin: '8px' }}>
                     <Link to={`/product/${product.productId}`} style={{ textDecoration: 'none' }}>

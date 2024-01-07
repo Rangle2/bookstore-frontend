@@ -7,6 +7,7 @@ import Homevalid from './components/Home/homevalid';
 import Profile from './components/User/profile';
 import Product from './components/Product/product';
 import CreateSeller from './components/Seller/createseller';
+import Homeseller from './components/Home/homeseller';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/product" element={<Product/>} />
         <Route path='/createSeller' element={<CreateSeller/>} />
+        <Route path='/seller'  element={<Homeseller/>} />
 
         {/* Add more routes as needed */}
       </Routes>
