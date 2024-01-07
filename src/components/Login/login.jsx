@@ -61,8 +61,8 @@ const LoginForm = () => {
           localStorage.setItem('username', formData.username)
           localStorage.setItem('userId', formData.userId)
           localStorage.setItem('accessToken', tokendata);
-          
           navigate('/home');
+          
 
         } catch (error) {
           console.error('Error parsing JSON:', error.message);

@@ -70,6 +70,11 @@ export default function Navbar() {
     navigate('/profile');
   };
 
+  const handleBecomeSeller = () => {
+    navigate('/createSeller')
+  }
+
+
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -150,7 +155,7 @@ export default function Navbar() {
                   </Grid>
 
 
-                  <Button sx={{
+                  <Button onClick={handleBecomeSeller} sx={{
                     width: { xs: '110px', md: '150px' },
                     position: 'sticky',
                     padding: '5px',
@@ -171,7 +176,9 @@ export default function Navbar() {
                       bottom: '-5px',
                       left: '20px'
                     },
+                    
                   }}>Become Seller</Button>
+
                   <AccountCircleIcon s sx={{
                     height: '40px',
                     width: '60px',

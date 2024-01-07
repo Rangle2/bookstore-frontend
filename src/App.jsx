@@ -6,6 +6,7 @@ import LoginForm from './components/Login/login';
 import Homevalid from './components/Home/homevalid';
 import Profile from './components/User/profile';
 import Product from './components/Product/product';
+import CreateSeller from './components/Seller/createseller';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/home" element={<Homevalid />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/product" element={<Product/>} />
+        <Route path='/createSeller' element={<CreateSeller/>} />
 
         {/* Add more routes as needed */}
       </Routes>
