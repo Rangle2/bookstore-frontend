@@ -81,7 +81,6 @@ const CategoryList = () => {
 
 
 
-
     useEffect(() => {
         fetchCategories();
         fetchAllProducts();

@@ -7,17 +7,9 @@ import { Button } from '@mui/material';
 import ProductList from '../ProductList/productlist';
 import TopList from '../TopList/toplist';
 import  Category  from '../Category/category';
-import AboutUs from '../AboutUs/aboutus';
-import { useState } from 'react';
-
+import AboutUs from '../AboutUs/aboutus'
 
 const Home = () => {
-
-  const [selectedCategory, setSelectedCategory] = useState(null);
-
-  const handleCategoryClick = (categoryId) => {
-    setSelectedCategory(categoryId);
-  };
 
   
   return (
@@ -44,16 +36,9 @@ const Home = () => {
 
 
         {/* Category */}
-        <Container maxWidth="lg" sx={{ display: { xs: 'none', sm: 'block' } }}>
-          <Grid container spacing={4} sx={{ marginTop: 11 }}>
-            <Grid item xs={12} md={4}>
-            <Category onCategoryClick={handleCategoryClick} />
-            </Grid>
-            <Grid item xs={12} md={8}>
-            
-            </Grid>
-          </Grid>
-        </Container>
+       
+            <Category />
+          
 
 
         {/* Best Author List*/}

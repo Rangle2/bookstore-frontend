@@ -69,12 +69,8 @@ const Homevalid = () => {
 
         {/* Category */}
        
-         
-           
+                   
             <Category />
-
-           
-        
 
 
         {/* Best Author List*/}
