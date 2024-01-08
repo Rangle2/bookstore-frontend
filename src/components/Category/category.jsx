@@ -48,6 +48,8 @@ const CategoryList = () => {
     const [categoryProducts, setCategoryProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(undefined);
 
+    
+
     const fetchCategories = async () => {
         try {
             const response = await fetch('http://localhost:8080/api/category/get');

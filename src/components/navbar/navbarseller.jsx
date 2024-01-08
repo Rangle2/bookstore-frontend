@@ -71,8 +71,8 @@ export default function Navbar() {
     navigate('/profile');
   };
 
-  const handleBecomeSeller = () => {
-    navigate('/createSeller')
+  const handleYourShop = () => {
+    navigate('/userId/shop')
   }
 
   const [firstName, setFirstName] = useState(localStorage.getItem("firstname") || '');
@@ -106,6 +106,10 @@ export default function Navbar() {
     navigate("/userId/cart")
   }
 
+  const handleHome = () =>{
+    navigate("/home")
+  }
+
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
     if (prevOpen.current === true && open === false) {
@@ -123,7 +127,7 @@ export default function Navbar() {
             <Grid container alignItems="center" justifyContent="space-between">
               {/* Sol Taraftaki Kısım */}
               <Grid item>
-                <Typography variant="h6" component="div" sx={{
+                <Typography onClick={handleHome} variant="h6" component="div" sx={{
                   width: { xs: '100px', md: '150px' },
                   '@media (max-width: 600px)': { fontSize: 20 },
                   color: 'white',
@@ -132,6 +136,7 @@ export default function Navbar() {
                   fontWeight: '100',
                   wordWrap: 'break-word',
                   position: 'sticky',
+                  cursor:'pointer',
                   top: 0,
                   zIndex: 1000,
                 }}>
@@ -159,11 +164,11 @@ export default function Navbar() {
                 {/* Account Circle Icon */}
                 <div>
                   <Grid sx={{ position: 'inherit', textAlign: 'center', fontFamily: 'Roboto', wordBreak: 'break-word', fontSize: '24px' }
-                  }>{firstName},{lastName}
+                  }>{firstName} {lastName}
                   </Grid>
 
 
-                  <Button onClick={handleBecomeSeller} sx={{
+                  <Button onClick={handleYourShop} sx={{
                     width: { xs: '110px', md: '150px' },
                     position: 'sticky',
                     padding: '5px',
@@ -185,7 +190,7 @@ export default function Navbar() {
                       left: '20px'
                     },
                     
-                  }}>Become Seller</Button>
+                  }}>Your Shop</Button>
 
                   <ShoppingCart onClick={handleCartBtn} sx={{width:'60px', height:'40px', position:'relative', top:'5px', cursor:'pointer'}}></ShoppingCart>
 
