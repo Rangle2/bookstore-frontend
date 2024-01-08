@@ -10,6 +10,8 @@ const Register = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [correctMessage, setCorrectMessage] = useState(null);
   const [formData, setFormData] = useState({
+    firstname: '',
+    lastname: '',
     username: '',
     email: '',
     password: '',
@@ -25,16 +27,20 @@ const Register = () => {
     event.preventDefault();
 
     const userRequest = {
+      firstname: formData.firstname,
+      lastname: formData.lastname,
       username: formData.username,
       password: formData.password,
       email: formData.email,
     };
 
-    if (!formData.username || !formData.email || !formData.password) {
+    if (!formData.firstname || !formData.lastname || !formData.username || !formData.email || !formData.password) {
       setErrorMessage('Please fill in all fields.');
       return;
     }
-    
+
+  
+
 
     try {
       const userResponse = await fetch('http://localhost:8080/api/user/create', {
@@ -47,10 +53,12 @@ const Register = () => {
 
       if (userResponse.ok) {
         try {
+          localStorage.setItem("firstname", formData.firstname);
+          localStorage.setItem("lastname", formData.lastname);
           const userData = await userResponse.json();
           setCorrectMessage('Successful registration!')
           navigate('/home'); // navigate user home page 
-          
+
         } catch (error) {
           console.error('Error parsing JSON:', error.message);
           setErrorMessage('Unexpected error occurred. Please try again.'); // JSON parsıng error
@@ -81,13 +89,39 @@ const Register = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <Typography sx={{color:'red', mt:'10px', textAlign:'center', width:'500px',pt:'10px'}}>
-           {errorMessage}
+        <Typography sx={{ color: 'red', mt: '10px', textAlign: 'center', width: '500px', pt: '10px' }}>
+          {errorMessage}
         </Typography>
-        <Typography  sx={{color:'green', mt:'10px'}}>
+        <Typography sx={{ color: 'green', mt: '10px' }}>
           {correctMessage}
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="firstname"
+            label="Firstname"
+            name="firstname"
+            autoComplete="firstname"
+            autoFocus
+            value={formData.firstname}
+            onChange={handleChange}
+          />
+
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="lastname"
+            label="Lastname"
+            name="lastname"
+            autoComplete="lastname"
+            autoFocus
+            value={formData.lastname}
+            onChange={handleChange}
+          />
+
           <TextField
             margin="normal"
             required

@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../navbar/navbarvalid';
+import Navbar from '../navbar/navbarseller';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';

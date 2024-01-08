@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import { useState } from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { styled, alpha } from '@mui/material/styles';
@@ -12,7 +12,6 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Button } from '@mui/material';
-import { Link } from 'react-router-dom';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Grow from '@mui/material/Grow';
 import Paper from '@mui/material/Paper';
@@ -20,6 +19,7 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import { useNavigate } from 'react-router-dom';
+import ShoppingCart from '@mui/icons-material/ShoppingCart';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -101,6 +101,10 @@ export default function Navbar() {
       setOpen(false);
     }
   }
+  
+  const handleCartBtn = () =>{
+    navigate("/userId/cart")
+  }
 
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
@@ -155,7 +159,7 @@ export default function Navbar() {
                 {/* Account Circle Icon */}
                 <div>
                   <Grid sx={{ position: 'inherit', textAlign: 'center', fontFamily: 'Roboto', wordBreak: 'break-word', fontSize: '24px' }
-                  }>{firstName} {lastName}
+                  }>{firstName},{lastName}
                   </Grid>
 
 
@@ -180,18 +184,23 @@ export default function Navbar() {
                       bottom: '-5px',
                       left: '20px'
                     },
-
+                    
                   }}>Become Seller</Button>
+
+                  <ShoppingCart onClick={handleCartBtn} sx={{width:'60px', height:'40px', position:'relative', top:'5px', cursor:'pointer'}}></ShoppingCart>
+
+                  
 
                   <AccountCircleIcon s sx={{
                     height: '40px',
                     width: '60px',
                     position: 'relative',
                     top: '5px',
+                    cursor:'pointer',
                     zIndex: 1001,
                     '@media (max-width: 600px)': {
                       height: '30px',
-                      width: '30px',
+                      width: '30px',  
                       position: 'relative',
                       top: '-100px',
                       left: '80px'

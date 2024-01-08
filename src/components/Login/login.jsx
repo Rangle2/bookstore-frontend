@@ -70,8 +70,8 @@ const LoginForm = () => {
               const isSeller = userRoles.some(role => role.name === 'ROLE_SELLER');
 
               if (isSeller) {
-                // User has ROLE_SELLER, navigate to /home/seller
-                navigate('/home/seller');
+                // User has ROLE_SELLER, navigate to /seller
+                navigate('/seller');
               } else {
                 // User doesn't have ROLE_SELLER, navigate to /home
                 navigate('/home');
