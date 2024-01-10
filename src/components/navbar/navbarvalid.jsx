@@ -20,6 +20,7 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import { useNavigate } from 'react-router-dom';
+import ShoppingCart from '@mui/icons-material/ShoppingCart';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -73,6 +74,10 @@ export default function Navbar() {
 
   const handleBecomeSeller = () => {
     navigate('/createSeller')
+  }
+
+  const handleCartBtn = () =>{
+    navigate ('/userId/cart')
   }
 
   const [firstName, setFirstName] = useState(localStorage.getItem("firstname") || '');
@@ -182,6 +187,9 @@ export default function Navbar() {
                     },
 
                   }}>Become Seller</Button>
+
+                  <ShoppingCart onClick={handleCartBtn} sx={{ width: '60px', height: '40px', position: 'relative', top: '5px', cursor: 'pointer' }}></ShoppingCart>
+
 
                   <AccountCircleIcon s sx={{
                     height: '40px',
