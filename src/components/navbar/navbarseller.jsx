@@ -103,8 +103,9 @@ export default function Navbar() {
   }
   
   const handleCartBtn = () =>{
-    navigate("/userId/cart")
-  }
+     let userId = localStorage.getItem('userId')
+     navigate (`/cart/${userId}`)
+   }
 
   const handleHome = () =>{
     navigate("/home")

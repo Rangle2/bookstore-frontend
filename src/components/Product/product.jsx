@@ -13,9 +13,12 @@ const Product = () => {
     productName: '',
     price: '',
     quantity: '',
+    productId: '',
+    productImg: '',
 
   })
 
+ 
 
 
   useEffect(() => {
@@ -25,6 +28,12 @@ const Product = () => {
       .then(data => setProduct(data))
       .catch(error => console.error(`Error fetching product details: ${error}`));
   }, [productId]);
+
+  const containedId = localStorage.setItem('productId', productId);
+  const containedImg = localStorage.setItem('productImg', product.imgLink);
+ 
+
+
 
   const resizedImage = `http://localhost:3000/${product.imgLink}`;
 
@@ -38,7 +47,12 @@ const Product = () => {
       productName: product.name,
       price: product.price,
       quantity: quantity,
+      productId: localStorage.getItem('productId'),
+      productImg: localStorage.getItem('productImg'),
+
     };
+
+    
   
     // Send a POST request to your backend to add the item to the cart
     fetch(`http://localhost:8080/api/cart/create/${userId}`, {
@@ -51,7 +65,7 @@ const Product = () => {
       .then(response => {
         if (response.ok) {
           console.log('Item added to cart successfully');
-          console.log(response)
+          
           // Optionally, you can update the UI to reflect the addition to the cart
         } else {
           console.error('Failed to add item to cart');

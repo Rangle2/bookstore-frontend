@@ -47,12 +47,18 @@ const LoginForm = () => {
 
       if (userResponse.ok) {
         try {
-          const tokendata = await userResponse.text();
+          const tokendataString = await userResponse.text();
+          const tokendata = JSON.parse(tokendataString);
+
           console.log('User Login successfully:', tokendata);
 
+
           localStorage.setItem('username', formData.username);
-          localStorage.setItem('userId', formData.userId); // Make sure you have formData.userId available
+          localStorage.setItem('firstname', tokendata.firstName);
+          localStorage.setItem('lastname', tokendata.lastName);
+          localStorage.setItem('userId', tokendata.userId);
           localStorage.setItem('accessToken', tokendata);
+          
 
           const userRoleResponse = await fetch(`http://localhost:8080/api/user/role/${formData.username}`, {
             method: 'GET',
@@ -65,6 +71,7 @@ const LoginForm = () => {
             try {
               const userRoles = await userRoleResponse.json();
               console.log('User Roles:', userRoles);
+             
 
               // Assuming userRoles is an array, you can check if it contains ROLE_SELLER
               const isSeller = userRoles.some(role => role.name === 'ROLE_SELLER');
@@ -72,12 +79,15 @@ const LoginForm = () => {
               if (isSeller) {
                 // User has ROLE_SELLER, navigate to /seller
                 navigate('/seller');
+               
+                
               } else {
                 // User doesn't have ROLE_SELLER, navigate to /home
                 navigate('/home');
               }
               // Store userRoles in localStorage with a specific key (e.g., 'userRoles')
               localStorage.setItem('userRoles', JSON.stringify(userRoles));
+              
 
             } catch (error) {
               console.error('Error parsing JSON:', error.message);
@@ -89,6 +99,7 @@ const LoginForm = () => {
           console.error('Error parsing JSON:', error.message);
           setErrorMessage('Unexpected error occurred. Please try again.');
         }
+        
       } else if (userResponse.status === 401) {
         setErrorMessage('Username or password wrong!');
       } else {
